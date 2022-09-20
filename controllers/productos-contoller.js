@@ -100,8 +100,8 @@ const obtenerProductos = async (req = request, res = response) => {
 
         productos.forEach(producto => {
 
-            const { _id: uid, nombre, precio, disponible, categoria } = producto;
-            const nueProducto = { uid, nombre, precio, disponible, categoria };
+            const { _id: uid, nombre, precio, img, disponible, categoria } = producto;
+            const nueProducto = { uid, nombre, precio, img, disponible, categoria };
             productosFin.push(nueProducto);
 
         })

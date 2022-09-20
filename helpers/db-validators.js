@@ -91,6 +91,19 @@ const nombreProductoExist = async(nombre = '') => {
 
 };
 
+const coleccionesPermitdas = (colecion = '', coleciones = []) => {
+
+    const incluida = coleciones.includes(colecion);
+
+    if ( !incluida ) {
+
+        throw new Error(`El parametro ==> ${colecion} <== No es vaslido, prueeba con: ${coleciones}.`);
+    }
+
+    return true;
+    
+}
+
 module.exports = {
     esRolValido,
     emailExiste,
@@ -98,5 +111,6 @@ module.exports = {
     categoriaExist,
     nombreCategoriaExist,
     productoExist,
-    nombreProductoExist
+    nombreProductoExist,
+    coleccionesPermitdas
 };

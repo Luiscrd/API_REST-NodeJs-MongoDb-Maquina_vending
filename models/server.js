@@ -1,5 +1,6 @@
 const express = require('express');
-var cors = require('cors');
+const cors = require('cors');
+const fileUpload = require('express-fileupload');
 const { dbConection } = require('../database/confij');
 
 class Server {
@@ -9,8 +10,10 @@ class Server {
         this.app = express();
         this.port = process.env.PORT;
         this.rutaRaiz = ruta;
+        // Paths de rutas
         this.authPath = '/api/auth';
-        this.buscarPath = '/api/buscar'
+        this.buscarPath = '/api/buscar';
+        this.uploadPath = '/api/upload';
         this.usuariosPath = '/api/usuarios';
         this.categoriasPath = '/api/categorias';
         this.productosPath = '/api/productos';
@@ -34,9 +37,15 @@ class Server {
         // CORS
         this.app.use(cors());
         // Lectura y trasformación del body
-        this.app.use(express.json())
+        this.app.use(express.json());
         // Directorio Público
         this.app.use(express.static('public'));
+        // Expresss File Upload
+        this.app.use(fileUpload({
+            useTempFiles : true,
+            tempFileDir : '/tmp/',
+            createParentPath: true
+        }));
 
     }
 
@@ -45,6 +54,8 @@ class Server {
         this.app.use( this.authPath, require('../routes/auth'));
 
         this.app.use( this.buscarPath, require('../routes/buscar'));
+
+        this.app.use( this.uploadPath, require('../routes/uploads'));
 
         this.app.use( this.usuariosPath, require('../routes/user'));
 
